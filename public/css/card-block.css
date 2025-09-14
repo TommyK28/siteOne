@@ -1,18 +1,88 @@
-/* 
+/*
  * CardBlock komponenta CSS
  * Implementujte stylování podle Figma designu
  * Použijte BEM metodologii pro názvy tříd
- * 
+ *
  * CardBlock obsahuje:
  * - Nadpis bloku (title)
  * - Sada karet (cards)
- * 
+ *
  * Každá karta obsahuje:
  * - Náhledový obrázek (image)
  * - Nadpis karty (title)
- * - Krátký text (text)  
+ * - Krátký text (text)
  * - Odkaz na detail (link-url)
- * 
+ *
  * Responzivní design pro desktop a mobil (breakpoint 480px)
  * Karty by měly být v řádcích/sloupcích podle designu
  */
+
+.articles {
+    padding-inline: var(--padding__default);
+    margin-block-end: 62px;
+}
+
+.articles__list {
+    display: grid;
+}
+
+.articles__item {
+    border: 1px solid var(--color__gray-50);
+    padding: 32px;
+}
+
+.articles__item a {
+    transition: var(--transition__default) ease-in-out;
+}
+
+.articles__item a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+.articles__item-image-link {
+    display: block;
+    margin-block-end: 30px;
+}
+
+.articles__item-image-wrapper {
+    display: block;
+    height: 280px;
+    overflow: hidden;
+}
+
+.articles__item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.articles__item-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.articles__item-excerpt {
+    margin-block-end: 40px;
+}
+
+.articles__item-link-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-end;
+    width: 20px;
+    height: 20px;
+}
+
+@media (min-width: 760px) {
+    .articles {
+        margin-block-end: 80px;
+    }
+
+    .articles__list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 86px 0;
+    }
+}

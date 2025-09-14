@@ -1,4 +1,174 @@
-/* 
+/*
  * CSS Reset a základní styly
  * Implementujte základní reset stylů
  */
+:root {
+    /* Colors */
+    --color__white: #ffffff;
+    --color__black: #000000;
+    --color__gray-50: #dcdfe4;
+    --color__gray-100: #6b7280;
+    --color__gray-200: #4b5563;
+    --color__gray-300: #322d2d;
+    --color__blue: #1c6dd0;
+
+    /* Font Family */
+    --font-family__primary: "Inter", sans-serif;
+
+    /* Font Sizes */
+    --font-size__base: 1.125rem; /* 18px */
+    --font-size__regular: 1rem; /* 16px */
+    --font-size__small: 0.812rem; /* 13px */
+
+    --font-size__h1: 3rem; /* 48px */
+    --font-size__h2: 2rem; /* 32px */
+    --font-size__h3: var(--font-size__regular);
+
+    /* Font weights */
+    --font-weight__regular: 400;
+    --font-weight__semi-bold: 600;
+    --font-weight__bold: 700;
+
+    /* Font line height */
+    --line__height__title: 1;
+    --line__height__body: 1.7;
+    --line__height__medium: 1.4;
+
+    /* Web layout */
+    --width__website: 1920px;
+
+    /* Padding */
+    --padding__default: 1rem; /* 16px */
+
+    /* Transition */
+    --transition__default: 0.3s;
+
+    /* Header height */
+    --header__height: 5.25rem; /* 84px */
+}
+
+@media (min-width: 481px) {
+    :root {
+        /* Font Sizes */
+        --font-size__h1: 6.25rem; /* 100px */
+    }
+}
+
+@media (min-width: 960px) {
+    :root {
+        /* Padding */
+        --padding__default: 5rem; /* 80px */
+    }
+}
+
+@layer base {
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        font-family: var(--font-family__primary);
+        font-size: var(--font-size__base);
+        line-height: var(--line__height__body);
+
+        color: var(--color__gray-200);
+    }
+
+    /* globální lock scrollu */
+    .body--lock {
+        overflow: hidden;
+    }
+
+    .page__layout {
+        padding-inline: var(--padding__default);
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+    a {
+        display: inline-block;
+        color: var(--color__black);
+        text-decoration: none;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    button {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .container {
+        max-width: var(--width__website);
+        margin: 0 auto;
+    }
+}
+
+@layer typography {
+    h1,
+    h2,
+    h3 {
+        display: block;
+    }
+
+    h1 {
+        font-family: var(--font-family__primary);
+        font-size: var(--font-size__h1);
+        font-weight: var(--font-weight__semi-bold);
+        line-height: var(--line__height__title);
+        color: var(--color__white);
+    }
+
+    h2,
+    h3 {
+        font-size: var(--font-size__h2);
+        font-weight: var(--font-weight__bold);
+        line-height: var(--line__height__title);
+        color: var(--color__black);
+    }
+
+    h2 {
+        margin-block-end: 2.5rem; /* 40px */
+    }
+
+    h3 {
+        margin-block-end: 1.625rem; /* 26px */
+    }
+
+    p {
+        font-weight: var(--font-weight__regular);
+        color: inherit;
+    }
+
+    a:focus,
+    a:focus-visible,
+    button:focus,
+    button:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+    }
+
+    .header__logo a:focus img,
+    .header__logo a:focus-visible img {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+    }
+}

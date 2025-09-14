@@ -1,38 +1,73 @@
 <!DOCTYPE html>
 <html lang="cs">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{% block title %}CodeHub{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link
+            rel="icon"
+            href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>"
+        />
 
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
-            <link rel="stylesheet" href="{{ asset('css/header.css') }}">
-            <link rel="stylesheet" href="{{ asset('css/hero.css') }}">
-            <link rel="stylesheet" href="{{ asset('css/card-block.css') }}">
-            <link rel="stylesheet" href="{{ asset('css/accordion.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/reset.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/header.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/hero.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/card-block.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/accordion.css') }}" />
         {% endblock %}
     </head>
     <body>
-        <!-- Header komponenta - implementujte HTML strukturu a stylování podle Figma designu -->
-        <div class="header-data">
-            <div class="logo-url">{{ asset('images/logo.svg') }}</div>
-            <div class="menu-items">
-                {% for item in menu_items %}
-                    <div class="menu-item">
-                        <span>{{ item.name }}</span>
-                        <span>{{ item.url }}</span>
-                        <span>{{ item.target }}</span>
-                    </div>
-                {% endfor %}
-            </div>
+        <div class="container">
+            <header class="header">
+                <!-- Header komponenta - implementujte HTML strukturu a stylování podle Figma designu -->
+                <div class="header__logo">
+                    <a href="/"
+                        ><img
+                            src="{{ asset('images/logo.svg') }}"
+                            alt="Logo site one"
+                            width="103"
+                            height="51"
+                    /></a>
+                </div>
+
+                <button
+                    class="header__nav-toggle js-nav-toggle"
+                    aria-controls="header-nav"
+                    aria-expanded="false"
+                    type="button"
+                >
+                    <span class="header__nav-icon" aria-hidden="true"></span>
+                </button>
+
+                <nav
+                    id="header-nav"
+                    class="header__nav"
+                    aria-label="Hlavní navigace"
+                    aria-hidden="true"
+                    inert
+                    tabindex="-1"
+                >
+                    <ul class="header__nav-list">
+                        {% for item in menu_items %}
+                        <li class="header__nav-item">
+                            <a
+                                class="header__nav-link"
+                                href="{{ item.url }}"
+                                target="{{ item.target }}"
+                                >{{ item.name }}</a
+                            >
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                {% block body %}{% endblock %} {% block javascripts %}
+                <script src="{{ asset('js/main.js') }}"></script>
+                {% endblock %}
+            </main>
         </div>
-
-        {% block body %}{% endblock %}
-
-        {% block javascripts %}
-            <script src="{{ asset('js/main.js') }}"></script>
-        {% endblock %}
     </body>
 </html>

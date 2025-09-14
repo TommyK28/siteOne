@@ -1,8 +1,176 @@
-/* 
+/*
  * Header komponenta CSS
  * Implementujte stylování podle Figma designu
  * Použijte BEM metodologii pro názvy tříd
- * 
+ *
  * Breakpoint pro mobilní zobrazení: 480px
  * Na mobilech se menu skrývá do hamburger menu
  */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: var(--padding__default);
+    height: var(--header__height);
+}
+
+.header__logo {
+    display: flex;
+    align-items: center;
+    max-width: 80px;
+}
+
+.header__nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 36px;
+    height: 24px;
+}
+
+.header__nav-icon {
+    position: relative;
+    display: block;
+    width: 24px;
+    height: 4px;
+    transition: var(--transition__default);
+    border-radius: 4px;
+    background-color: var(--color__black);
+}
+
+/* .header__nav-toggle:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+} */
+
+/* stav otevřeného menu */
+.header__nav-toggle[aria-expanded="true"] .header__nav-icon {
+    background-color: transparent;
+}
+
+.header__nav-toggle[aria-expanded="true"] .header__nav-icon::before {
+    transform: rotate(45deg);
+    top: 0;
+}
+
+.header__nav-toggle[aria-expanded="true"] .header__nav-icon::after {
+    transform: rotate(-45deg);
+    bottom: 0;
+}
+
+.header__nav-icon::before,
+.header__nav-icon::after {
+    display: block;
+    position: absolute;
+    right: 0;
+    width: 36px;
+    height: inherit;
+    content: "";
+    transition: var(--transition__default);
+    border-radius: inherit;
+    background-color: var(--color__black);
+}
+
+.header__nav-icon::before {
+    top: -9px;
+}
+
+.header__nav-icon::after {
+    bottom: -9px;
+}
+
+.header__nav {
+    position: fixed;
+    top: var(--header__height);
+    right: 0;
+    width: 100%;
+    height: calc(100dvh - var(--header__height));
+    background-color: var(--color__white);
+    overflow-y: auto;
+    z-index: 10;
+
+    visibility: hidden;
+    transform: translateX(100%);
+    opacity: 0;
+
+    transition: transform var(--transition__default) ease-out,
+        visibility 0s var(--transition__default),
+        opacity var(--transition__default) ease-out;
+}
+
+.header__nav--active {
+    visibility: visible;
+    transform: translateX(0);
+    opacity: 1;
+    transition: transform var(--transition__default) ease-out, visibility 0s,
+        opacity var(--transition__default) ease-out;
+}
+
+.header__nav-list {
+    display: flex;
+    flex-direction: column;
+    padding-block: 1.25rem; /* 20px */
+    padding-inline: var(--padding__default);
+    gap: 1.25rem 2.75rem; /*  20px 44px */
+}
+
+.header__nav-item {
+    display: inline-flex;
+    padding: 0 4px;
+}
+
+.header__nav-link {
+    font-size: var(--font-size__small);
+    font-weight: var(--font-weight__semi-bold);
+    text-transform: uppercase;
+    line-height: var(--line__height__medium);
+    color: var(--color__gray-200);
+    text-decoration: solid underline transparent;
+    transition: var(--transition__default) ease-in-out;
+}
+
+.header__nav-link:hover {
+    text-decoration-color: inherit;
+}
+
+.header__nav-link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+@media (min-width: 481px) {
+    .header {
+        padding-block: 1.125rem; /* 18px */
+    }
+
+    .header__nav-toggle {
+        display: none;
+    }
+
+    .header__nav {
+        align-content: center;
+        position: static;
+        visibility: visible;
+        width: auto;
+        height: 100%;
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .header__nav-list {
+        flex-direction: row;
+        padding: 0;
+        gap: 1rem; /* 16px */
+    }
+}
+
+@media (min-width: 760px) {
+    .header__logo {
+        max-width: 103px;
+    }
+
+    .header__nav-list {
+        gap: 1rem 3rem; /* 16px 48px */
+    }
+}

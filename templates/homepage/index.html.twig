@@ -1,49 +1,121 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {% block title %}CodeHub - Domovská stránka{%
+endblock %} {% block body %}
+<!-- Hero komponenta - implementujte HTML strukturu a stylování podle Figma designu -->
+{% if hero %}
 
-{% block title %}CodeHub - Domovská stránka{% endblock %}
-
-{% block body %}
-    <!-- Hero komponenta - implementujte HTML strukturu a stylování podle Figma designu -->
-    {% if hero %}
-    <div>
-        <span>{{ asset('images/' ~ hero.backgroundImage) }}</span>
-        <span>{{ hero.title }}</span>
-        <span>{{ hero.text }}</span>
+<section class="intro">
+    <picture class="intro__image-wrapper">
+        <source
+            srcset="{{ asset('images/' ~ 'hero-bg.jpg') }}"
+            media="(min-width: 481px)"
+            width="1920"
+            height="820"
+        />
+        <img
+            class="intro__image"
+            src="{{ asset('images/' ~ 'hero-bg-mob.jpg') }}"
+            alt="Dítě s robotickým psem"
+            width="375"
+            height="820"
+            decoding="async"
+        />
+    </picture>
+    <div class="intro__content">
+        <h1 class="intro__title">{{ hero.title }}</h1>
+        <p class="intro__text">{{ hero.text }}</p>
     </div>
-    {% endif %}
+</section>
+{% endif %}
 
-    <!-- CardBlock komponenta - implementujte HTML strukturu a stylování podle Figma designu -->
-    {% if card_block %}
-    <div>
-        <span>{{ card_block.title }}</span>
-        <div>
-            {% for card in card_block.cards %}
-                {% if card.isActive %}
-                <div>
-                    <span>{{ asset('images/' ~ card.image) }}</span>
-                    <span>{{ card.title }}</span>
-                    <span>{{ card.text }}</span>
-                    <span>{{ card.linkUrl }}</span>
-                </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-    </div>
-    {% endif %}
+<!-- CardBlock komponenta - implementujte HTML strukturu a stylování podle Figma designu -->
+{% if card_block %}
+<section class="articles">
+    <h2 class="articles__heading">{{ card_block.title }}</h2>
 
-    <!-- Accordion komponenta - implementujte HTML strukturu a stylování podle Figma designu -->
-    {% if accordion_block %}
-    <div>
-        <span>{{ accordion_block.title }}</span>
-        <span>{{ accordion_block.description }}</span>
-        <div>
-            {% for faq in featured_faqs %}
-            <div>
-                <span>{{ faq.question }}</span>
-                <span>{{ faq.answer }}</span>
+    <div class="articles__list">
+        {% for card in card_block.cards %} {% if card.isActive %}
+        <article class="articles__item">
+            <a class="articles__item-image-link" href="{{ card.linkUrl }}">
+                <picture class="articles__item-image-wrapper">
+                    <source
+                        srcset="{{ asset('images/card' ~ loop.index ~ '.jpg') }}"
+                        media="(min-width: 481px)"
+                        width="279px"
+                        height="280px"
+                    />
+                    <img
+                        class="articles__item-image"
+                        src="{{ asset('images/card' ~ loop.index ~ '-mob.jpg') }}"
+                        alt="{{ card.title }}"
+                        loading="lazy"
+                        decoding="async"
+                        width="820"
+                        height="280"
+                    />
+                </picture>
+            </a>
+            <div class="articles__item-content">
+                <h3 class="articles__item-title">
+                    <a class="articles__item-link" href="{{ card.linkUrl }}">{{
+                        card.title
+                    }}</a>
+                </h3>
+                <p class="articles__item-excerpt">{{ card.text }}</p>
+
+                <a
+                    class="articles__item-link-icon"
+                    href="{{ card.linkUrl }}"
+                    aria-label="Číst více: {{ card.title }}"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="14"
+                        height="14"
+                        fill="none"
+                    >
+                        <path
+                            fill="var(--color__blue)"
+                            fill-rule="evenodd"
+                            d="M6.41.577a.833.833 0 0 1 1.18 0l5.833 5.834a.833.833 0 0 1 0 1.178l-5.834 5.834a.833.833 0 1 1-1.178-1.179l4.41-4.41H1.168a.833.833 0 1 1 0-1.667h9.654l-4.41-4.411a.833.833 0 0 1 0-1.179Z"
+                            clip-rule="evenodd"
+                        />
+                    </svg>
+                </a>
             </div>
-            {% endfor %}
-        </div>
+        </article>
+        {% endif %} {% endfor %}
     </div>
-    {% endif %}
-{% endblock %}
+</section>
+{% endif %}
+
+<!-- Accordion komponenta - implementujte HTML strukturu a stylování podle Figma designu -->
+{% if accordion_block %}
+<section class="faq">
+    <div class="faq__intro">
+        <h2 class="faq__title">{{ accordion_block.title }}</h2>
+        <p class="faq__description">{{ accordion_block.description }}</p>
+    </div>
+
+    <div class="faq__list">
+        {% for faq in featured_faqs %}
+        <div class="faq__item">
+            <button
+                class="faq__question-button"
+                type="button"
+                aria-expanded="false"
+                aria-controls="faq-answer-{{ loop.index }}"
+            >
+                {{ faq.question }}
+            </button>
+            <p
+                id="faq-answer-{{ loop.index }}"
+                class="faq__answer"
+                aria-hidden="true"
+            >
+                {{ faq.answer }}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %} {% endblock %}

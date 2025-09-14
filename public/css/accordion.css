@@ -1,13 +1,94 @@
-/* 
+/*
  * Accordion komponenta CSS
  * Implementujte stylování podle Figma designu
  * Použijte BEM metodologii pro názvy tříd
- * 
+ *
  * Accordion obsahuje:
  * - Nadpis (title)
  * - Popisek (description)
  * - FAQ položky jako accordion (question klikací, answer se zobrazí/skryje)
- * 
+ *
  * Responzivní design pro desktop a mobil (breakpoint 480px)
  * JavaScript funkčnost pro otevírání/zavírání FAQ položek
  */
+
+.faq {
+    display: grid;
+    padding-inline: var(--padding__default);
+    margin-block-end: 3.875rem; /* 62px */
+    gap: 1.125rem; /* 18px */
+}
+
+.faq__description {
+    font-size: var(--font-size__regular);
+    color: var(--color__gray-100);
+}
+
+.faq__item {
+    border-bottom: 1px solid var(--color__gray-50);
+}
+
+.faq__question-button {
+    position: relative;
+    width: 100%;
+    text-align: left;
+    padding-block: 1.75rem; /* 28px */
+    padding-inline: 1.5rem; /* 24px */
+    font-size: var(--font-size__base);
+    font-weight: var(--font-weight__bold);
+    color: var(--color__black);
+}
+
+.faq__question-button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+.faq__question-button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 24px;
+    width: 10px;
+    height: 10px;
+    border-left: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-50%) rotate(-45deg);
+    transition: transform 0.3s ease-in-out;
+}
+
+.faq__answer {
+    font-size: var(--font-size__regular);
+
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out,
+        opacity 0.3s ease-in-out;
+    opacity: 0;
+    padding: 0 1rem; /* 16px */
+}
+
+.faq__item--open .faq__answer {
+    max-height: 500px;
+    padding: 1rem 1rem 1.75rem 1rem; /* 16px 16px 28px 16px */
+    opacity: 1;
+}
+
+.faq__item--open .faq__question-button::before {
+    transform: translateY(-50%) rotate(133deg);
+}
+
+@media (min-width: 960px) {
+    .faq {
+        grid-template-columns: 1fr 1fr;
+        margin-block-end: 5rem; /* 80px */
+        column-gap: 3.75rem; /* 60px */
+    }
+}
+
+@media (min-width: 1420px) {
+    .faq {
+        grid-template-columns: minmax(250px, 560px) 1fr;
+        column-gap: 10rem; /* 160px */
+    }
+}
